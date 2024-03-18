@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hubungi Dosen Mu | #Bareng_sandkalam</title>
+    <link rel="shortcut icon" href="./img/ethernet.svg" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="
+https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
+"></script>
+  </head>
+  <body>
+    <!-- header -->
+    <!-- menu dan navigasi-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand permanent-marker-regular" href="/">Chattanya</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse align-items-center justify-content-end"
+          id="navbarNav"
+        >
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./src/tentang.html">Tentang</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- section jumbotron -->
+    <!-- background jumbotron is image from pexel.com and parallax -->
+    <div
+      class="d-flex text-white flex-column justify-content-center align-items-center parallax"
+    >
+      <div
+        class="text-dark container text-sm-center text-left p-3 bg-light bg-opacity-25"
+      >
+        <h1 class="fs-1 fw-bold nunito-sans-regular">CHAT DOSEN</h1>
+        <p class="fs-2">Hubungi dosen mu dengan mudah dan cepat</p>
+      </div>
+    </div>
+
+    <!-- section Kontak Dosen-->
+    <!-- list kontak dosen diambil dari localstorage -->
+    <section class="container">
+      <h2 class="text-center mt-5 permanent-marker-regular">Kontak Dosen</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card mt-3 shadow">
+            <div class="card-body">
+              <h5 class="card-title">List Kontak</h5>
+              <div class="overflow-x-auto">
+                <table class="table table-hover h-25" id="klist">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col" class="d-none">idkontak</th>
+                      <th scope="col">Nama</th>
+                      <th scope="col">Matkul</th>
+                      <th scope="col">Kontak</th>
+                    </tr>
+                  </thead>
+                  <tbody class="overflow-y-auto"></tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="4">
+                        <button
+                          type="button"
+                          class="btn btn-success"
+                          onclick="exportKontak()"
+                        >
+                          <i class="bi bi-download"></i> Export
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          onclick="importKontak()"
+                        >
+                          <i class="bi bi-upload"></i> Import
+                        </button>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- section tambah kontak -->
+        <!-- kotak dosen akan disimpan dalam localstorage -->
+        <div class="col-md-6">
+          <div class="card mt-3 shadow">
+            <div class="card-body">
+              <h5 class="card-title">Tambah Dosen</h5>
+              <div>
+                <div class="mb-3">
+                  <label for="nama" class="form-label">Nama Dosen</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nama"
+                    placeholder="Nama Dosen"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="kontak" class="form-label">Kontak</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="kontak"
+                    placeholder="08xxx"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="matkul" class="form-label">Mata Kuliah</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="matkul"
+                    placeholder="Mata Kuliah"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  onclick="tambahKontak()"
+                >
+                  <i class="bi bi-plus"></i> Tambah
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- section chat -->
+    <section class="container">
+      <h2 class="text-center mt-5 permanent-marker-regular">Chat</h2>
+      <div class="row">
+        <!-- section chat dosen -->
+        <div class="col-md-6">
+          <div class="card mt-3 shadow">
+            <div class="card-body">
+              <h5 class="card-title">Pilih Kontak</h5>
+              <!-- pilih -->
+              <select
+                class="form-select"
+                name="inputGroupSelect01"
+                id="inputGroupSelect01"
+              >
+                <option>Pilih Kontak</option>
+                <!-- <option value="1">Dosen 1</option>
+                <option value="2">Dosen 2</option>
+                <option value="3">Dosen 3</option> -->
+              </select>
+              <!-- mr/mrs -->
+              <label for="mrmrs" class="from-label mt-3">Sebutan</label>
+              <select name="mrmrs" id="mrmrs" class="form-select">
+                <option>Mr/Mrs</option>
+                <option value="pak">pak</option>
+                <option value="bu">bu</option>
+              </select>
+
+              <!-- tentang dirimu -->
+              <div class="my-3">
+                <label for="namaku" class="form-label">Nama</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="namaku"
+                  placeholder="Nama kamu"
+                />
+                <label for="kelasku" class="form-label mt-3">Kelas</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="kelasku"
+                  placeholder="Kelas kamu"
+                />
+              </div>
+              <!-- pilih template -->
+              <div class="my-3">
+                <label for="template" class="form-label">Template</label>
+                <select class="form-select" id="template">
+                  <option>Pilih Template</option>
+                  <!-- <option value="1">Intro</option>
+                  <option value="2">Pengingat Kuliah (hari ini)</option>
+                  <option value="3">Pengingat Kuliah (Besok)</option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- section isi chat -->
+        <div class="col-md-6">
+          <div class="card mt-3 shadow">
+            <div class="card-body">
+              <h5 class="card-title">Isi Chat</h5>
+              <div class="mb-3">
+                <label for="pesan" class="form-label">Pesan</label>
+                <textarea
+                  class="form-control"
+                  id="pesan"
+                  rows="8"
+                  placeholder="Assalamualaikum, {pak/bu}. Mohon Izin waktunya, saya {nama} dari kelas {kelas}. Perihal ..."
+                ></textarea>
+              </div>
+              <button type="submit" id="kirim" class="btn btn-success">
+                <i class="bi bi-whatsapp"></i> Kirim
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- section jadwal -->
+    <section class="container">
+      <h2 class="text-center mt-5 permanent-marker-regular">Jadwal</h2>
+      <div class="row">
+        <div class="col-12">
+          <div class="card mt-3 shadow">
+            <div class="card-body">
+              <div class="overflow-x-auto">
+                <table class="table table-hover" id="jadkul">
+                  <thead>
+                    <tr>
+                      <th scope="col">No</th>
+                      <th scope="col">Hari</th>
+                      <th scope="col">Jam</th>
+                      <th scope="col">Mata Kuliah</th>
+                      <th scope="col">Dosen</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- isi -->
+                  </tbody>
+                  <tfoot class="d-print-none">
+                    <tr>
+                      <td colspan="4">
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          onclick="exportJadwal()"
+                        >
+                          <i class="bi bi-download"></i> Export
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-success"
+                          onclick="importJadwal()"
+                        >
+                          <i class="bi bi-upload"></i> Import
+                        </button>
+                      </td>
+                      <td>
+                        <!-- tambah dan hapus dan print jadwal -->
+                        <!-- print -->
+                        <!-- print jadwal secara terpisah -->
+                        <button
+                          type="button"
+                          class="btn btn-info"
+                          onclick="printJadwal()"
+                        >
+                          <i class="bi bi-printer"></i>
+                        </button>
+
+                        <!-- hapus -->
+                        <!-- hapus jadwal with modal -->
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          data-bs-toggle="modal"
+                          data-bs-target="#HapusJadModal"
+                        >
+                          <i class="bi bi-trash"></i>
+                        </button>
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="HapusJadModal"
+                          tabindex="-1"
+                          aria-labelledby="HapusJadModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1
+                                  class="modal-title fs-5"
+                                  id="HapusJadModalLabel"
+                                >
+                                  Hapus Jadwal
+                                </h1>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <!-- list nama jadwal with checklist-->
+                                <table
+                                  class="table table-hover"
+                                  id="deleteInModal"
+                                >
+                                  <thead>
+                                    <tr>
+                                      <th class="d-none">id</th>
+                                      <th scope="col">No</th>
+                                      <th scope="col">Hari</th>
+                                      <th scope="col">Jam</th>
+                                      <th scope="col">Mata Kuliah</th>
+                                      <th scope="col">Dosen</th>
+                                      <th scope="col">Hapus</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <!-- isi -->
+                                  </tbody>
+                                </table>
+
+                                <!-- end list -->
+                                <div class="modal-footer">
+                                  <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Selesai
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- tambah -->
+                        <!-- Button trigger modal -->
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#TambahJadModal"
+                        >
+                          <i class="bi bi-plus"></i>
+                        </button>
+
+                        <!-- Modal -->
+                        <div
+                          class="modal fade"
+                          id="TambahJadModal"
+                          tabindex="-1"
+                          aria-labelledby="TambahJadModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1
+                                  class="modal-title fs-5"
+                                  id="TambahJadModalLabel"
+                                >
+                                  Tambah Jadwal
+                                </h1>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <!-- input tambah jadwal -->
+                                <div class="mb-3">
+                                  <label for="hari" class="form-label"
+                                    >Hari</label
+                                  >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="hari"
+                                    placeholder="Hari"
+                                  />
+                                </div>
+                                <div class="mb-3">
+                                  <label for="jam" class="form-label"
+                                    >Jam</label
+                                  >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="jam"
+                                    placeholder="08.30-10.00"
+                                  />
+                                </div>
+                                <div class="mb-3">
+                                  <label for="matkulnya" class="form-label"
+                                    >Mata Kuliah</label
+                                  >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="matkulnya"
+                                    placeholder="Mata Kuliah"
+                                  />
+                                </div>
+                                <div class="mb-3">
+                                  <label for="dosen" class="form-label"
+                                    >Dosen</label
+                                  >
+                                  <input
+                                    type="text"
+                                    class="form-control"
+                                    id="dosen"
+                                    placeholder="Dosen"
+                                  />
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button
+                                  type="button"
+                                  class="btn btn-secondary"
+                                  data-bs-dismiss="modal"
+                                >
+                                  Batal
+                                </button>
+                                <button
+                                  type="button"
+                                  class="btn btn-primary"
+                                  data-bs-dismiss="modal"
+                                  onclick="tambahJadwal()"
+                                >
+                                  <i class="bi bi-plus"></i>
+                                  Simpan
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- end tambah -->
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- section footer -->
+    <footer class="bg-dark text-white text-center p-3 mt-3">
+      <p>Chattanya &copy; 2024</p>
+      <p>by sandkalam</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      //my script
+
+      $(document).ready(function () {
+        //get data from localstorage
+        let datakontak = localStorage.getItem("datakontak");
+        datakontak = JSON.parse(datakontak) || [];
+        localStorage.setItem("datakontak", JSON.stringify(datakontak));
+
+        //export data to json file
+        window.exportKontak = () => {
+          const dataStr =
+            "data:text/json;charset=utf-8," +
+            encodeURIComponent(JSON.stringify(datakontak));
+          const downloadAnchorNode = document.createElement("a");
+          downloadAnchorNode.setAttribute("href", dataStr);
+          downloadAnchorNode.setAttribute("download", "datakontak.json");
+          document.body.appendChild(downloadAnchorNode); // required for firefox
+          downloadAnchorNode.click();
+          downloadAnchorNode.remove();
+        };
+        //import data from json file
+        window.importKontak = () => {
+          const input = document.createElement("input");
+          input.type = "file";
+          input.onchange = (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.readAsText(file, "UTF-8");
+            reader.onload = (readerEvent) => {
+              const content = readerEvent.target.result;
+              const data = JSON.parse(content);
+              datakontak = data;
+              localStorage.setItem("datakontak", JSON.stringify(datakontak));
+              location.reload();
+            };
+          };
+          input.click();
+        };
+        //delete this kontak
+        window.hapusKontak = () => {
+          let idkontak = $(event.target).closest("tr").find("td:eq(0)").text();
+          datakontak = datakontak.filter((data) => data.idkontak != idkontak);
+          localStorage.setItem("datakontak", JSON.stringify(datakontak));
+          location.reload();
+        };
+
+        //show data from localstorage
+        let html = "";
+        datakontak.forEach((data, index) => {
+          html += `
+          <tr>
+            <th scope="row">${index + 1}</th>
+            <td class="d-none">${data.idkontak}</td>
+            <td>${data.nama}</td>
+            <td>${data.matkul}</td>
+            <td>${data.kontak}</td>
+            <td>
+              <button type="button" class="btn btn-danger" onclick="hapusKontak()">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          `;
+        });
+        $("#klist tbody").append(html);
+
+        //add data to localstorage
+        window.tambahKontak = () => {
+          let nama = $("#nama").val();
+          let matkul = $("#matkul").val();
+          let kontak = $("#kontak").val();
+          //idkontak
+          let idkontak = datakontak.length + 1;
+          datakontak.push({ idkontak, nama, matkul, kontak });
+          localStorage.setItem("datakontak", JSON.stringify(datakontak));
+          location.reload();
+        };
+
+        //pilih kontak from localstorage
+        let htmlOption = "";
+        datakontak.forEach((data, index) => {
+          htmlOption += `<option value="${index}">${data.nama}</option>`;
+        });
+        $("#inputGroupSelect01").append(htmlOption);
+
+        //template
+
+        let template = [
+          `Assalamualaikum, {mrs}. Mohon Izin waktunya, saya {nama} dari kelas {kelas}. Perihal ...`,
+          `Assalamualaikum, {mrs}. Mohon Izin waktunya, saya {nama} dari kelas {kelas}. Mau mengingatkan bahwa hari ini ada jam kuliah dikelas kami, terimakasih {mrs} 🙏.`,
+          `Assalamualaikum, {mrs}. Saya {nama} dari kelas {kelas}. Mohon maaf, saya tidak bisa hadir kuliah hari ini karena ...`,
+          `Assalamualaikum, {mrs}. Saya {nama} dari kelas {kelas}. Mohon maaf, saya tidak bisa hadir kuliah besok karena ...`,
+        ];
+
+        //render template, template value is from template array
+        let htmlTemplate = "";
+        template.forEach((data, index) => {
+          htmlTemplate += `
+          <option value="${index}">${data}</option>
+          `;
+        });
+
+        $("#template").append(htmlTemplate);
+
+        //change value of template when namaku, kelasku and mrmrs change
+        $("#mrmrs, #namaku, #kelasku, #template").change(function () {
+          let nm = $("#namaku").val();
+          let kls = $("#kelasku").val();
+          let mrs = $("#mrmrs").val();
+          let pesan = template[$("#template").val()];
+
+          //make sure pesan is defined
+          if (pesan === undefined) {
+            pesan = "";
+          } else {
+            pesan = pesan.replace(/{nama}/g, nm);
+            pesan = pesan.replace(/{kelas}/g, kls);
+            pesan = pesan.replace(/{mrs}/g, mrs);
+          }
+
+          $("#pesan").val(pesan);
+          console.log($("#template").val()); // Log the value of $("#template").val()
+          console.log(pesan); // Log the value of pesan
+        });
+
+        //send to whatsapp
+        $("#kirim").click(function () {
+          let kontak = datakontak[$("#inputGroupSelect01").val()].kontak;
+          let pesan = $("#pesan").val();
+          //remove 0 in front of number and space
+          kontak = kontak.replace(/^0+/, "");
+          kontak = kontak.replace(/\s/g, "");
+
+          let url = `https://api.whatsapp.com/send?phone=62${kontak}&text=${pesan}`;
+          window.open(url);
+        });
+      });
+
+      //---------------------------------------------------------
+      //jadwal diambil dari localstorage
+      let jadwal = localStorage.getItem("jadwal");
+      jadwal = JSON.parse(jadwal) || [];
+      localStorage.setItem("jadwal", JSON.stringify(jadwal));
+
+      //export jadwal to json file
+      window.exportJadwal = () => {
+        const dataStr =
+          "data:text/json;charset=utf-8," +
+          encodeURIComponent(JSON.stringify(jadwal));
+        const downloadAnchorNode = document.createElement("a");
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "jadwal.json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+      };
+
+      //import jadwal from json file
+      window.importJadwal = () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.onchange = (e) => {
+          const file = e.target.files[0];
+          const reader = new FileReader();
+          reader.readAsText(file, "UTF-8");
+          reader.onload = (readerEvent) => {
+            const content = readerEvent.target.result;
+            const data = JSON.parse(content);
+            jadwal = data;
+            localStorage.setItem("jadwal", JSON.stringify(jadwal));
+            location.reload();
+          };
+        };
+        input.click();
+      };
+
+      //print jadwal in new tab
+      window.printJadwal = () => {
+        let printContents = document.getElementById("jadkul").outerHTML;
+        let originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+      };
+
+      //delete this jadwal
+      window.hapusJadwal = () => {
+        let idjadwal = $(event.target).closest("tr").find("th:eq(0)").text();
+        jadwal = jadwal.filter((data) => data.idjadwal != idjadwal);
+        localStorage.setItem("jadwal", JSON.stringify(jadwal));
+        location.reload();
+      };
+
+      //show data from localstorage
+
+      let htmlJadwal = "";
+      jadwal.forEach((data, index) => {
+        htmlJadwal += `
+        <tr>
+          <th scope="row">${index + 1}</th>
+          <td>${data.hari}</td>
+          <td>${data.jam}</td>
+          <td>${data.matkulnya}</td>
+          <td>${data.dosennya}</td>
+        </tr>
+        `;
+      });
+      $("#jadkul>tbody").append(htmlJadwal);
+
+      //list jadwal on modal
+      let htmlJadwalModal = "";
+      jadwal.forEach((data, index) => {
+        htmlJadwalModal += `
+        <tr>
+          <th class="d-none">${data.idjadwal}</th>
+          <td>${index + 1}</td>
+          <td>${data.hari}</td>
+          <td>${data.jam}</td>
+          <td>${data.matkulnya}</td>
+          <td>${data.dosennya}</td>
+          <td>
+            <button type="button" class="btn btn-danger" onclick="hapusJadwal()">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+        `;
+      });
+      $("#deleteInModal>tbody").append(htmlJadwalModal);
+
+      //add data to localstorage
+      window.tambahJadwal = () => {
+        let hari = $("#hari").val();
+        let jam = $("#jam").val();
+        let matkulnya = $("#matkulnya").val();
+        let dosennya = $("#dosen").val();
+        //idjadwal
+        let idjadwal = jadwal.length + 1;
+        jadwal.push({ idjadwal, hari, jam, matkulnya, dosennya });
+        localStorage.setItem("jadwal", JSON.stringify(jadwal));
+        location.reload();
+      };
+    </script>
+  </body>
+</html>
