@@ -90,6 +90,7 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
                       <th scope="col">Nama</th>
                       <th scope="col">Matkul</th>
                       <th scope="col">Kontak</th>
+                      <th scope="col">Chat</th>
                     </tr>
                   </thead>
                   <tbody class="overflow-y-auto"></tbody>
@@ -543,6 +544,9 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
         //show data from localstorage
         let html = "";
         datakontak.forEach((data, index) => {
+          kontakNamdua = data.kontak.replace(/^0+/, "62");
+          //trim
+          kontakNamdua = kontakNamdua.replace(/\s/g, "");
           html += `
           <tr>
             <th scope="row">${index + 1}</th>
@@ -550,6 +554,13 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
             <td>${data.nama}</td>
             <td>${data.matkul}</td>
             <td>${data.kontak}</td>
+            <td>
+              <button type="button" class="btn btn-success" onclick="window.open(
+                'https://api.whatsapp.com/send?phone=${kontakNamdua}'
+              )">
+                <i class="bi bi-whatsapp"></i>
+              </button>
+            </td>
             <td>
               <button type="button" class="btn btn-danger" onclick="hapusKontak()">
                 <i class="bi bi-trash"></i>
