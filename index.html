@@ -138,7 +138,7 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
                 <div class="mb-3">
                   <label for="kontak" class="form-label">Kontak</label>
                   <input
-                    type="number"
+                    type="text"
                     class="form-control"
                     id="kontak"
                     placeholder="08xxx"
@@ -547,6 +547,13 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
           kontakNamdua = data.kontak.replace(/^0+/, "62");
           //trim
           kontakNamdua = kontakNamdua.replace(/\s/g, "");
+          //remove character "-"
+          kontakNamdua = kontakNamdua.replace(/-/g, "");
+          //for data.kontak if in front number is +62 or 62 replace with 0
+          data.kontak = data.kontak.replace(/^(\+62|62)/, "0");
+          //if have "-" replace with ""
+          data.kontak = data.kontak.replace(/-/g, "");
+
           html += `
           <tr>
             <th scope="row">${index + 1}</th>
