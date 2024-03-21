@@ -495,7 +495,7 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
       crossorigin="anonymous"
     ></script>
     <script>
-      //my script
+      //my script is generated with my own logic, so this is not perfect at all
 
       $(document).ready(function () {
         //get data from localstorage
@@ -545,7 +545,10 @@ https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
         let html = "";
         datakontak.forEach((data, index) => {
           kontakNamdua = data.kontak.replace(/^0+/, "62");
-          //trim
+          //replace +62 with 62
+          kontakNamdua = kontakNamdua.replace(/^\+62/, "62");
+          //remove whiteshpace
+          data.kontak = data.kontak.replace(/\s/g, "");
           kontakNamdua = kontakNamdua.replace(/\s/g, "");
           //remove character "-"
           kontakNamdua = kontakNamdua.replace(/-/g, "");
