@@ -18,7 +18,7 @@ const data = [
 const Navbar = () => {
   return (
     <>
-      <div className="navbar bg-base-100 shadow-lg fixed top-0 z-10">
+      <div className="navbar bg-base-100 shadow-lg fixed top-0 z-10 print:hidden">
         <div className="navbar-start">
           <div className="dropdown">
             <div

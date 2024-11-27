@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 
 import { useState } from "react";
@@ -25,9 +26,20 @@ const Schedule = () => {
 
   useEffect(() => {
     const dataJadwal = localStorage.getItem("jadwal");
-    dataJadwal ? setJadwal(JSON.parse(dataJadwal)) : setJadwal([]);
-    const dataDosen = localStorage.getItem("data");
-    dataDosen ? setDataDosen(JSON.parse(dataDosen)) : setDataDosen([]);
+    if (dataJadwal) {
+      const jadwal: JadwalItem[] = JSON.parse(dataJadwal);
+      setJadwal(jadwal);
+    }
+    // re-render element
+    const interval = setInterval(() => {
+      const dataDosen = localStorage.getItem("data");
+      if (dataDosen) {
+        setDataDosen(JSON.parse(dataDosen));
+      } else {
+        setDataDosen([]);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
   const handleTambahJadwal = () => {
     const modal = document.getElementById("my_modal_5") as HTMLDialogElement;
@@ -82,19 +94,25 @@ const Schedule = () => {
 
   const handleSubmitJadwal = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submit Jadwal");
-    const newJadwal: JadwalItem = {
-      id: jadwal.length + 1,
-      matakuliah: matakuliah,
-      name: dosen.toString(),
-      hari: hari,
-      waktu: {
-        waktu_mulai: waktuMulai,
-        waktu_selesai: waktuSelesai,
-      },
-    };
-    setJadwal([...jadwal, newJadwal]);
-    localStorage.setItem("jadwal", JSON.stringify(jadwal));
+
+    setJadwal((prevJadwal) => {
+      const newJadwal = [
+        ...prevJadwal,
+        {
+          id: jadwal.length + 1,
+          matakuliah: matakuliah,
+          name: dosen.toString(),
+          hari: hari,
+          waktu: {
+            waktu_mulai: waktuMulai,
+            waktu_selesai: waktuSelesai,
+          },
+        },
+      ];
+      localStorage.setItem("jadwal", JSON.stringify(newJadwal));
+      return newJadwal;
+    });
+    // localStorage.setItem("jadwal", JSON.stringify(jadwal));
   };
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -112,7 +130,7 @@ const Schedule = () => {
             <h1 className="text-2xl font-bold text-center">Schedule</h1>
             <div className="grid grid-col-1">
               <div className="card bg-base-100">
-                <table className="table border-1 border-gray-300">
+                <table className="table border border-gray-300 print:border print:border-black">
                   <thead className="text-center rounded-md">
                     <tr className="bg-primary text-white">
                       <th className="rounded-tl-md w-5">No</th>
@@ -124,37 +142,28 @@ const Schedule = () => {
                     </tr>
                   </thead>
                   <tbody className="text-center">
-                    {jadwal.map((jadwal) => (
-                      <tr key={jadwal.id}>
-                        <td>{jadwal.id}</td>
-                        <td className="text-start">{jadwal.matakuliah}</td>
-                        <td className="text-start">{jadwal.name}</td>
-                        <td>{jadwal.hari}</td>
-                        <td>
-                          {jadwal.waktu.waktu_mulai} -{" "}
-                          {jadwal.waktu.waktu_selesai}
-                        </td>
-                        <td className={opsiJadwal ? "hidden" : ""}>
-                          {/* <button
-                            className="btn btn-edit"
-                            data-tip="Edit"
-                            onClick={() => handleEditJadwal(jadwal.id)}
-                          >
-                            Edit
-                          </button> */}
-                          <button
-                            className="btn btn-error"
-                            data-tip="Hapus"
-                            onClick={() => handleHapusJadwal(jadwal.id)}
-                          >
-                            Hapus
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                    {Array.isArray(jadwal) &&
+                      jadwal.map((item: JadwalItem) => (
+                        <tr key={item.id}>
+                          <td>{item.id}</td>
+                          <td className="text-start">{item.matakuliah}</td>
+                          <td className="text-start">{item.name}</td>
+                          <td>{item.hari}</td>
+                          <td>{`${item.waktu.waktu_mulai} - ${item.waktu.waktu_selesai}`}</td>
+                          <td className={opsiJadwal ? "hidden" : ""}>
+                            <button
+                              className="btn btn-error"
+                              data-tip="Hapus"
+                              onClick={() => handleHapusJadwal(item.id)}
+                            >
+                              Hapus
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
-                <div className="flex justify-end gap-3 mt-3">
+                <div className="flex justify-end gap-3 mt-3 print:hidden">
                   <button
                     className="btn btn-primary"
                     onClick={handleTambahJadwal}

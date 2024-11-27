@@ -154,7 +154,7 @@ const Contact = () => {
   };
 
   return (
-    <div>
+    <div className="print:hidden">
       <div className="container mx-auto py-5">
         <h1 className="text-4xl font-bold text-center mb-3">Contact</h1>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 ">
