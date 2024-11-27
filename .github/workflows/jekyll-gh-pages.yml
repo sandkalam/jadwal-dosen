@@ -4,7 +4,7 @@ name: Deploy konten statis ke Pages
 on:
   # Berjalan pada push yang menargetkan branch default
   push:
-    branches: ['main']
+    branches: ['React']
 
   # Memungkinkan Anda menjalankan workflow ini secara manual dari tab Actions
   workflow_dispatch:
